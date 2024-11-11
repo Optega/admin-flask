@@ -25,8 +25,6 @@ td.center {
 
 .unsaved {
   position: fixed;
-  top: 0;
-  left: 0;
   margin: 12px 0 0 12px;
   padding: 4px 8px;
   width: 152px;
@@ -42,9 +40,7 @@ td.center {
 
 .buttons-fixed {
   position: fixed;
-  margin: 0 12px 12px 0;
-  bottom: 0px;
-  right: 0px;
+  margin: 12px;
   display: flex;
   flex-direction: column;
 }
@@ -54,9 +50,60 @@ td.center {
   width: 44px;
   border-radius: 100px;
   padding: 0 12px;
-  margin-bottom: 8px;
+  margin-bottom: 0px;
 }
 
 .button-save .icon {
   padding-top: 13px;
 }
+
+/* Tailwind CSS */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.top-0 {
+  top: 0;
+}
+
+.bottom-0 {
+  bottom: 0;
+}
+
+.right-0 {
+  right: 0;
+}
+
+.left-0 {
+  left: 0;
+}
+
+/* !Tailwind CSS */

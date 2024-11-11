@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Список отримувачів</title>
     <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+    <link
       rel="stylesheet"
       href="{{ url_for('static', filename='styles/normalize.css') }}"
     />
@@ -131,13 +135,27 @@
           e.returnValue = "";
         }
       });
+
+      function logout() {
+        if (unsavedChanges) {
+          if (confirm("Є незбережені зміни. Ви впевнені, що хочете вийти?")) {
+            window.location.href = "/logout";
+          }
+        } else {
+          window.location.href = "/logout";
+        }
+      }
     </script>
   </head>
   <body>
     <div class="main-container">
       <h1>Список отримувачів</h1>
 
-      <div id="unsaved-warning" class="unsaved" style="display: none">
+      <div
+        id="unsaved-warning"
+        class="unsaved top-0 left-0"
+        style="display: none"
+      >
         Є незбережені зміни!
       </div>
 
@@ -197,10 +215,14 @@
         </tbody>
       </table>
 
-      <div class="buttons buttons-fixed">
+      <div class="buttons buttons-fixed bottom-0 right-0">
         <button class="button-save" onclick="saveChanges()">
           <img class="icon" src="static/images/icons/disk.svg" alt="save" />
         </button>
+      </div>
+
+      <div class="buttons buttons-fixed top-0 right-0">
+        <button onclick="logout()">Вийти</button>
       </div>
     </div>
   </body>

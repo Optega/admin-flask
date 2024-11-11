@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Вхід</title>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/normalize.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/skeleton.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/custom.css') }}"
+    />
+
+    <script></script>
+  </head>
+  <body>
+    <div class="main-container">
+      <h3>Вхід</h3>
+
+      <form
+        method="post"
+        class="flex flex-col justify-center items-center gap-2"
+      >
+        <input type="text" name="username" placeholder="Логін" required />
+        <input type="password" name="password" placeholder="Пароль" required />
+        <!-- Error message -->
+        {% if error %}
+        <span style="color: red">{{ error }}</span>
+        {% endif %}
+        <button type="submit" class="w-full">Увійти</button>
+      </form>
+    </div>
+  </body>
+</html>
