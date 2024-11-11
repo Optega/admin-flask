@@ -1,0 +1,19 @@
+name: flask-admin
+
+services:
+  flask-admin:
+    container_name: flask-admin
+    build:
+      context: ../
+      dockerfile: docker/admin/Dockerfile
+    pull_policy: always
+    volumes:
+      - ../admin/recipients.json:/app/admin/recipients.json
+    ports:
+      - 5000:5000
+    networks:
+      - flask-network
+    
+networks:
+  flask-network:
+    name: flask-network

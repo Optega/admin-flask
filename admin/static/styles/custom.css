@@ -1,0 +1,62 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  margin-bottom: 0;
+}
+
+input.phone {
+  width: 140px;
+}
+
+td button {
+  padding: 0 12px;
+  margin-bottom: 0;
+}
+
+th,
+td.center {
+  text-align: center;
+}
+
+.unsaved {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 12px 0 0 12px;
+  padding: 4px 8px;
+  width: 152px;
+  border-radius: 4px;
+  background-color: red;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  padding-top: 10px;
+}
+
+.buttons-fixed {
+  position: fixed;
+  margin: 0 12px 12px 0;
+  bottom: 0px;
+  right: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.button-save {
+  height: 44px;
+  width: 44px;
+  border-radius: 100px;
+  padding: 0 12px;
+  margin-bottom: 8px;
+}
+
+.button-save .icon {
+  padding-top: 13px;
+}

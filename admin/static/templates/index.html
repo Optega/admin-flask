@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Список отримувачів</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/normalize.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/skeleton.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/custom.css') }}"
+    />
+
+    <script>
+      let unsavedChanges = false;
+      let recipients = {{ recipients|tojson }};
+      let nextId =
+        recipients.length > 0 ? recipients[recipients.length - 1].id + 1 : 1;
+      let phonesAreNotValid = [];
+
+      function markUnsaved() {
+        unsavedChanges = true;
+        document.getElementById("unsaved-warning").style.display = "block";
+      }
+
+      function markSaved() {
+        unsavedChanges = false;
+        document.getElementById("unsaved-warning").style.display = "none";
+      }
+
+      function addRecipient() {
+        const phoneInput = document.getElementById("new-phone");
+        const nameInput = document.getElementById("new-name");
+
+        const newPhone = phoneInput.value.trim();
+        const newName = nameInput.value.trim();
+
+        if (newPhone && newName) {
+          markUnsaved()
+
+          const newRecipient = {
+            id: nextId,
+            phone: newPhone,
+            name: newName,
+          };
+          recipients.push(newRecipient);
+
+          const tbody = document.querySelector("tbody");
+          const newRow = document.createElement("tr");
+          newRow.id = `recipient-${nextId}`;
+          newRow.innerHTML = `
+            <td>${nextId}</td>
+            <td><input class="phone" name="phone" type="text" value="${newPhone}" onchange="markUnsaved()"></td>
+            <td><input name="name" type="text" maxlength="25" value="${newName}" onchange="markUnsaved()"></td>
+            <td class="center"><button onclick="deleteRecipient(${nextId})"> <img class="icon" src="static/images/icons/trash.svg" alt="delete"/></button></td>
+        `;
+          tbody.appendChild(newRow);
+
+          nextId++;
+
+          phoneInput.value = "";
+          nameInput.value = "";
+        } else {
+          alert("Будь ласка, введіть номер телефону та імʼя.");
+        }
+      }
+
+      function saveChanges() {
+        phonesAreNotValid = [];
+
+        const updatedRecipients = recipients.map((recipient) => {
+          const recipientRow = document.getElementById(`recipient-${recipient.id}`);
+          const phoneInput = recipientRow.querySelector("input[name=phone]");
+
+          if (!phoneInput.value || !phoneInput.value.match(/^\+380\d{9}$/)) {
+            phonesAreNotValid.push(recipient.id);
+            phoneInput.style.border = "1px solid red";
+            return;
+          } else {
+            phoneInput.style.border = "1px solid #D1D1D1";
+          }
+
+          const phoneValue = phoneInput.value;
+          const nameValue = recipientRow.querySelector("input[name=name]").value;
+          return {
+            id: recipient.id,
+            phone: phoneValue,
+            name: nameValue,
+          };
+        });
+
+        if (phonesAreNotValid.length > 0) {
+          alert("Будь ласка, введіть коректний номер телефону у форматі +380987654321.");
+          return;
+        }
+
+        fetch("/save_recipients", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedRecipients),
+        }).then((response) => {
+          if (response.ok) {
+            markSaved();
+            alert("Список отримувачів оновлено!");
+          } else {
+            alert("Не вдалося зберегти список.");
+          }
+        });
+      }
+
+      function deleteRecipient(id) {
+        markUnsaved()
+
+        if (confirm("Ви впевнені, що хочете видалити цього отримувача?")) {
+          recipients = recipients.filter((recipient) => recipient.id !== id);
+          document.getElementById(`recipient-${id}`).remove();
+        }
+      }
+
+      window.addEventListener("beforeunload", function (e) {
+        if (unsavedChanges) {
+          e.preventDefault();
+          e.returnValue = "";
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div class="main-container">
+      <h1>Список отримувачів</h1>
+
+      <div id="unsaved-warning" class="unsaved" style="display: none">
+        Є незбережені зміни!
+      </div>
+
+      <div>
+        <input type="text" id="new-phone" placeholder="Номер телефону" />
+        <input
+          type="text"
+          id="new-name"
+          maxlength="25"
+          placeholder="Імʼя користувача"
+        />
+        <button onclick="addRecipient()">Додати отримувача</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Номер телефону</th>
+            <th>Ім'я користувача</th>
+            <th>Видалити</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for recipient in recipients %}
+          <tr id="recipient-{{ recipient.id }}">
+            <td>{{ recipient.id }}</td>
+            <td>
+              <input
+                class="phone"
+                type="text"
+                name="phone"
+                value="{{ recipient.phone }}"
+                onchange="markUnsaved()"
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                name="name"
+                value="{{ recipient.name }}"
+                maxlength="25"
+                onchange="markUnsaved()"
+              />
+            </td>
+            <td class="center">
+              <button onclick="deleteRecipient({{recipient.id}})">
+                <img
+                  class="icon"
+                  src="static/images/icons/trash.svg"
+                  alt="delete"
+                />
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="buttons buttons-fixed">
+        <button class="button-save" onclick="saveChanges()">
+          <img class="icon" src="static/images/icons/disk.svg" alt="save" />
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
