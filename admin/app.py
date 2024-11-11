@@ -14,14 +14,12 @@ app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=30)
 
 
 def read_recipients():
-    # FIXME: refactor path to recipients.json before commit
-    with open("admin/recipients.json", "r", encoding="utf-8") as f:
+    with open("recipients.json", "r", encoding="utf-8") as f:
         return json.load(f)
 
 
 def write_recipients(recipients):
-    # FIXME: refactor path to recipients.json before commit
-    with open("admin/recipients.json", "w", encoding="utf-8") as f:
+    with open("recipients.json", "w", encoding="utf-8") as f:
         json.dump(recipients, f, ensure_ascii=False, indent=2)
 
 

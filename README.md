@@ -1,6 +1,6 @@
 # Change the data in the file to Flask
 
-## Setup
+## Getting started
 
 ### .env
 
@@ -15,7 +15,7 @@ python -c 'import secrets; print(secrets.token_hex())'
 
 ### recipients.json
 
-You need to create a file `admin/recipients.json` with the data template
+You need to create a file `recipients.json` with the data template in the root folder
 
 ```json
 [

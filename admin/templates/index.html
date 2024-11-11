@@ -62,7 +62,7 @@
             <td>${nextId}</td>
             <td><input class="phone" name="phone" type="text" value="${newPhone}" onchange="markUnsaved()"></td>
             <td><input name="name" type="text" maxlength="25" value="${newName}" onchange="markUnsaved()"></td>
-            <td class="center"><button onclick="deleteRecipient(${nextId})"> <img class="icon" src="static/images/icons/trash.svg" alt="delete"/></button></td>
+            <td class="center"><button onclick="deleteRecipient(${nextId})"> <img class="icon icon-delete" src="static/images/icons/trash.svg" alt="delete"/></button></td>
         `;
           tbody.appendChild(newRow);
 
@@ -204,7 +204,7 @@
             <td class="center">
               <button onclick="deleteRecipient({{recipient.id}})">
                 <img
-                  class="icon"
+                  class="icon icon-delete"
                   src="static/images/icons/trash.svg"
                   alt="delete"
                 />
@@ -217,7 +217,11 @@
 
       <div class="buttons buttons-fixed bottom-0 right-0">
         <button class="button-save" onclick="saveChanges()">
-          <img class="icon" src="static/images/icons/disk.svg" alt="save" />
+          <img
+            class="icon icon-save"
+            src="static/images/icons/disk.svg"
+            alt="save"
+          />
         </button>
       </div>
 

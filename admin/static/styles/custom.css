@@ -1,3 +1,50 @@
+/* Default styles (light theme) */
+body {
+  background-color: white;
+  color: #222222;
+}
+
+/* Dark theme styles */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #222222;
+    color: white;
+  }
+
+  /* Update skeleton */
+  input[type="email"],
+  input[type="number"],
+  input[type="search"],
+  input[type="text"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="password"],
+  textarea,
+  select {
+    background-color: #222222;
+  }
+
+  .button,
+  button,
+  input[type="submit"],
+  input[type="reset"],
+  input[type="button"] {
+    color: white;
+  }
+  .button:hover,
+  button:hover,
+  input[type="submit"]:hover,
+  input[type="reset"]:hover,
+  input[type="button"]:hover,
+  .button:focus,
+  button:focus,
+  input[type="submit"]:focus,
+  input[type="reset"]:focus,
+  input[type="button"]:focus {
+    color: #bbb;
+  }
+}
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -36,6 +83,14 @@ td.center {
   width: 16px;
   height: 16px;
   padding-top: 10px;
+}
+
+.icon-delete {
+  filter: invert(50%) sepia(1) saturate(5) hue-rotate(320deg);
+}
+
+.icon-save {
+  filter: invert(50%) sepia(1) saturate(5) hue-rotate(100deg);
 }
 
 .buttons-fixed {
